@@ -1,8 +1,13 @@
-## Getdata
-
-source("extern.R");
-
 GetData = function(trainFile, testFile){
+  # Get train and test data from csv format to table.
+  #
+  # Args:
+  #   trainFile  : train file path.
+  #   testFile   : test file path.
+  # Returns:
+  #   $train : train data table.
+  #   $test  : test data table.
+  source("extern.R");
   column.types <- c('integer',   # PassengerId
                     'factor',    # Survived 
                     'factor',    # Pclass

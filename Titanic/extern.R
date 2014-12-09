@@ -1,9 +1,9 @@
 ## External libraries
 
-library("Amelia");
-library("vcd");
-library("Hmisc");
-library("caret");
-library("corrgram");
-library("stringr");
-library("plyr");
+require("Amelia");
+require("vcd");
+require("Hmisc");
+require("caret");
+require("corrgram");
+require("stringr");
+require("plyr");
