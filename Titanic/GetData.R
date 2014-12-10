@@ -8,6 +8,7 @@ GetData = function(trainFile, testFile){
   #   $train : train data table.
   #   $test  : test data table.
   source("extern.R");
+  source("FeatureEngrg.R")
   column.types <- c('integer',   # PassengerId
                     'factor',    # Survived 
                     'factor',    # Pclass
@@ -21,16 +22,23 @@ GetData = function(trainFile, testFile){
                     'character', # Cabin
                     'factor'     # Embarked
                     );
-  tryCatch(
-      {
+  # tryCatch(
+  #     {
       train = read.csv(trainFile, colClasses=column.types, na.strings=c("NA", ""));                    
       test = read.csv(testFile, colClasses=column.types[-2], na.strings=c("NA", ""));
+      print("train and test data are loaded...");
+      ## Using Fate ILO Survived because term is shorter and just sounds good
+      train$Fate <- train$Survived
+      ## Revaluing Fate factor to ease assessment of confusion matrices later
+      train$Fate <- revalue(train$Fate, c("1" = "Survived", "0" = "Perished"))      
       train$Forcast = 0;
       test$Forcast = 0;
+      train = FeatureEngrg(train);
+      test = FeatureEngrg(test);
       return (list("train"=train, "test"=test));
-    }, 
-    error = function(){
-      print("Error in reading files");
-    }
-  );  
+    # }, 
+    # error = function(){
+    #   print("Error in reading files");
+    # }
+  # );  
 };

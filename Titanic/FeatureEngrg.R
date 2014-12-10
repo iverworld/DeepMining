@@ -6,10 +6,6 @@ FeatureEngrg <- function(data) {
   # Returns:
   #   Feature engineering data.
   
-  ## Using Fate ILO Survived because term is shorter and just sounds good
-  data$Fate <- data$Survived
-  ## Revaluing Fate factor to ease assessment of confusion matrices later
-  data$Fate <- revalue(data$Fate, c("1" = "Survived", "0" = "Perished"))
   ## Boat.dibs attempts to capture the "women and children first"
   ## policy in one feature.  Assuming all females plus males under 15
   ## got "dibs' on access to a lifeboat
@@ -33,8 +29,8 @@ FeatureEngrg <- function(data) {
   ## Even-numbered cabins assigned Side="starboard"
   data$cabin.last.digit <- str_sub(data$Cabin, -1)
   data$Side <- "UNK"
-  data$Side[which(isEven(data$cabin.last.digit))] <- "port"
-  data$Side[which(isOdd(data$cabin.last.digit))] <- "starboard"
+  data$Side[which(data$cabin.last.digit %in% c("2", "4", "6", "8", "0"))] <- "port"
+  data$Side[which(data$cabin.last.digit %in% c("1", "3", "5", "7", "9"))] <- "starboard"
   data$Side <- as.factor(data$Side)
   data$cabin.last.digit <- NULL
   return (data)
