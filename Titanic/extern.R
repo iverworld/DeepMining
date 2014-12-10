@@ -7,3 +7,4 @@ require("caret");
 require("corrgram");
 require("stringr");
 require("plyr");
+require("pROC");
