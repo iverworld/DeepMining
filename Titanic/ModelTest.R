@@ -16,3 +16,14 @@ glm.tune.1 <- train(Fate ~ Sex + Class + Age + Family + Embarked,
                     method = "glm",
                     metric = "ROC",
                     trControl = cv.ctrl);
+
+summary(glm.tune.1)
+
+ada.grid = expand.grid(.iter = c(50, 100), .maxdepth = c(4, 8), .nu = c(0.1, 1))
+set.seed(35)
+ada.tune <- train(Fate ~ Sex + Class + Age + Family + Embarked, 
+                  data = train.batch,
+                  method = "ada",
+                  metric = "ROC",
+                  tuneGrid = ada.grid,
+                  trControl = cv.ctrl)
